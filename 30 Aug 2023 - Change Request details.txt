@@ -1,0 +1,250 @@
+#=============================================================================================
+# SCOM Management packs and subsequent tuned packs
+#
+# Additional logic to aid customers in additional outage scenarios, reduced alerts, analytics
+#
+# 'How to' write-ups and capabilities:
+# https://kevinjustin.com/blog/2023/08/17/why-addendum-packs/
+# https://kevinjustin.com/blog/2023/03/07/deciding-event-collection-versus-alert-rule/
+#
+#=============================================================================================
+
+
+Active Directory Domain Services (ADDS) v10.0.2.4 2016+ 
+Download:	https://www.microsoft.com/en-us/download/details.aspx?id=54525
+Documentation:	See link above as MP guide documentation included in MSI
+Purpose:	Monitor Active Directory per MSFT AD product team
+Change Impact:	Additional workflows run on DC's to determine health in addition to Varonis
+Security Impact:	N/A no special access required, just SCOM agent install on DC servers
+Any testing needed:	Assess compute performance, install SCOM agent on DC, compare compute performance.
+			***Recommended to compliment AD related health issues and performance.
+
+Microsoft.Windows.Server.AD.2012.Monitoring.Addendum (ADDS addendum) v1.0.3.4
+Download:	https://github.com/theKevinJustin/ADDSAddendumAgnostic
+Documentation:	https://kevinjustin.com/blog/2023/08/18/adds-addendum-pack/
+Purpose:	Monitor AD DC servers with simplified alerts, group policy error summary report, ADDS specific summary report alert, alert closure logic.  Component alert monitor creates hourly warning (or critical alerts) based on number of alerts per DC.  One alert for multiple DC's and alerts for subscription notification to SME.
+Change Impact:	Low (decreases SCOM monitoring workflows on DC)	
+Security Impact:	N/A (no changes on monitoring capabilities
+Any testing needed:	Update server names in ADDS Team daily summary alert report.
+
+
+Active Directory Certificate Services (ADCS) v10.0.0.1 2016+ 
+Download:	https://www.microsoft.com/en-us/download/details.aspx?id=56671
+Documentation:	See link above as MP guide documentation included in MSI
+Purpose:	Monitor Certificate service servers per ADCS product team
+Change Impact:	Low (decreases SCOM monitoring workflows on CA role servers)
+Security Impact:	N/A no special access required, just SCOM agent install on DC servers
+Any testing needed:	Certificate Authority service monitoring, rule alerts
+
+
+Microsoft.Windows.Active.Directory.Certificate.Services.2016.Monitoring.Addendum (ADCS addendum) v1.0.0.4
+Download:	https://github.com/theKevinJustin/ADCS2016-Addendum
+Documentation:	https://kevinjustin.com/blog/2023/08/18/adcs-addendum-pack/
+Purpose:	Monitor Certificate services per MSFT field engineers
+Change Impact:	Low (decreases SCOM monitoring workflows on CA role servers)	
+Security Impact:	N/A (no changes on monitoring capabilities
+Any testing needed:	Update group for ADCS CA and Certificate server(s) to customize group for pre-built notification subscription.  Addendum includes new functionality including: Certificate Authority service monitoring, decreased rule alerts, service recovery automation, daily reports, alert closure logic.
+
+
+Active Directory Federation Services (ADFS) v10.0.3.3 2016+ 
+Download:	https://www.microsoft.com/en-us/download/details.aspx?id=54526
+Documentation:	See link above as MP guide documentation included in MSI
+Purpose:	Monitor Federation Services per MSFT AD product team
+Change Impact:	Additional workflows run on DC's to determine health in addition to Varonis
+Security Impact:	N/A no special access required, just SCOM agent install on DC servers
+Any testing needed:	Install SCOM agent on DC and assess compute performance, then install ADDS pack to compare
+
+
+Microsoft.Active.Directory.Federation.Services.2016.Addendum (ADFS addendum) v1.0.1.5
+Download:	https://github.com/theKevinJustin/ADFSAddendum
+Documentation:	See link above as MP guide documentation included in MSI
+		Documentation https://kevinjustin.com/blog/2023/08/18/adfs-addendum-pack/
+Purpose:	Monitor Certificate servers with simplified alerts, adds daily reports, alert closure, group for subscription
+Change Impact:	Low (decreases SCOM monitoring workflows on DC)	
+Security Impact:	N/A (no changes on monitoring capabilities
+Any testing needed:	Update groups for ADFS and SQL server names to customize to customize group for pre-built notification subscription.  Addendum includes new functionality including: daily reports, alert closure logic.
+
+
+AD Applications (CRL and ADFS specific web synthetic) v1.0.1.5
+Download:	https://github.com/theKevinJustin/ADApplications
+Documentation:	https://kevinholman.com/2016/08/25/sql-mp-run-as-accounts-no-longer-required/	
+Purpose:	Monitor MSSQL servers with HealthService SID and least privs	
+Change Impact:	Low (no change until SQL DBA team runs low privs task to setup HealthService SID)
+Security Impact:	Low (decreases attack vectors eliminating runAs account user/pass across network for exposure into SQL)
+Any testing needed:	Coordination with SQL DBA team to run TSQL low privs task configuring SQL
+			'How to' keep SQL databases monitored for DBA team using TSQL or SCOM console task
+
+
+Custom.Windows.TaskScheduler v1.2.2.8
+Download:	https://github.com/BCornelissen/SCOM-WinTaskSchedulerMP/releases/tag/1.2.2.8
+Documentation:	https://kevinholman.com/2016/08/25/sql-mp-run-as-accounts-no-longer-required/	
+Purpose:	Monitor MSSQL servers with HealthService SID and least privs	
+Change Impact:	Low (no change until SQL DBA team runs low privs task to setup HealthService SID)
+Security Impact:	Low (decreases attack vectors eliminating runAs account user/pass across network for exposure into SQL)
+Any testing needed:	Coordination with SQL DBA team to run TSQL low privs task configuring SQL
+			'How to' keep SQL databases monitored for DBA team using TSQL or SCOM console task
+
+
+McAfee Monitoring Customizations 1.0.1.1
+Download:	https://github.com/theKevinJustin/TrellixAgentAddendum
+Documentation:	https://kevinjustin.com/blog/2023/08/30/trellix-agent-pack/
+Purpose:	Monitor Trellix agent for failures, 7031 event count monitor, discovers application via registry key, Seed class, daily report summary and on-demand task.
+Change Impact:	Low
+Security Impact:	Low
+Any testing needed:	None
+
+
+IIS
+KMS
+Nice VMware
+SMTP
+Proactive Security
+Tangible ProV
+
+
+Microsoft System Center 2012 Configuration Manager Monitoring 5.0.8239.1010
+Download:	https://systemcenter.wiki/?GetCategory=System+Center+2012+Configuration+Manager
+Documentation:	https://kevinjustin.com/blog/2023/08/30/mecm-sccm-addendum-pack/	
+Purpose:	Monitor MECM servers per SCCM product group.
+Change Impact:	Low
+Security Impact:	Low
+Any testing needed:	Update required to make daily team report have applicable server alerts
+
+
+Microsoft System Center 2012 Configuration Manager Monitoring Addendum 1.0.2.6
+Download:	https://github.com/theKevinJustin/MECMSCCMAddendum
+Documentation:	https://kevinjustin.com/blog/2023/08/30/mecm-sccm-addendum-pack/	
+Purpose:	Monitor MECM servers per health model, including daily reports, disk full, client cache clean, subscription, disk, and server groups.  Also weekday alert cleanup, service restart automation.
+Change Impact:	Low
+Security Impact:	Low
+Any testing needed:	Update required to make daily team report have applicable server alerts
+
+
+Microsoft Windows Server DHCP 2016 and above 10.1.0.1
+Download:	https://www.microsoft.com/en-us/download/details.aspx?id=54587
+Documentation:	See link above as MP guide documentation included in MSI
+Purpose:	Monitor DHCP servers per DHCP product group.
+Change Impact:	Low
+Security Impact:	Low
+Any testing needed:	Update required for group overrides.
+
+
+Microsoft Windows DHCP 2016+ Server Addendum 1.0.0.5
+Download:	https://github.com/theKevinJustin/DHCPAgnostic
+Documentation:	https://kevinjustin.com/blog/2023/08/29/dhcp-addendum-pack/
+Purpose:	Monitor DHCP servers per health model, adjusting multiple rule/monitor alerts to warning, and service recovery automation.
+Change Impact:	Low
+Security Impact:	Low
+Any testing needed:	Update required for group overrides.
+
+
+Microsoft Windows DNSServer 2016 10.1.0.1
+Download:	https://www.microsoft.com/en-us/download/details.aspx?id=54524
+Documentation:	See link above as MP guide documentation included in MSI	
+Purpose:	Monitor MSSQL servers with HealthService SID and least privs	
+Change Impact:	Low (no change until SQL DBA team runs low privs task to setup HealthService SID)
+Security Impact:	Low (decreases attack vectors eliminating runAs account user/pass across network for exposure into SQL)
+Any testing needed:	Coordination with SQL DBA team to run TSQL low privs task configuring SQL
+			'How to' keep SQL databases monitored for DBA team using TSQL or SCOM console task
+
+
+Microsoft Windows Server DNS Monitoring Addendum 1.0.3.6
+Download:	https://github.com/theKevinJustin/DNSAddendumAgnostic
+Documentation:	https://kevinjustin.com/blog/2023/08/23/dns-addendum-pack/
+Purpose:	Monitor DNS on PDC emulator servers using AD integrated DNS
+Change Impact:	Low (decreases SCOM monitoring workflows on DNS servers)	
+Security Impact:	N/A (no changes on monitoring capabilities
+Any testing needed:	Configure nslookup synthetic for internal/external FQDN's, as well as scoping built-in DNS synthetics to ##PDCEmulatorRoleDCs##.  Builds groups that require manual update after import to update random GUIDs assigned to custom groups, which scope the configuration.  Also integrates DNS alert report and daily alert closure workflows.
+
+
+MSSQL - System Center MP for SQL Server 7.2.0.0
+Download https://www.microsoft.com/en-us/download/details.aspx?id=56203
+Documentation:	See link above as MP guide documentation included in MSI
+		Documentation https://kevinjustin.com/blog/2023/07/25/updating-sqlserver-packs-to-v7-2-0-0/
+Purpose:	Monitor MSSQL servers per Microsoft SQL Engineering
+Change Impact:	Low (decreases SCOM monitoring workflows on SQL)	
+Security Impact:	N/A (no changes on monitoring capabilities
+Any testing needed:	Currently installed, installing newer version with Custom Monitor capability to allow DBA's to easily monitor SQL with custom provided SQL queries
+
+
+MSSQL RunAs Addendum 7.0.42.0
+Download:	https://github.com/thekevinholman/SQLRunAsAddendum
+Documentation:	https://kevinholman.com/2016/08/25/sql-mp-run-as-accounts-no-longer-required/	
+Purpose:	Monitor MSSQL servers with HealthService SID and least privs	
+Change Impact:	Low (no change until SQL DBA team runs low privs task to setup HealthService SID)
+Security Impact:	Low (decreases attack vectors eliminating runAs account user/pass across network for exposure into SQL)
+Any testing needed:	Coordination with SQL DBA team to run TSQL low privs task configuring SQL
+			'How to' keep SQL databases monitored for DBA team using TSQL or SCOM console task
+
+MSSQL Addendum 1.0.1.1
+Download:	https://github.com/theKevinJustin/MSSQLAddendum
+Documentation:	https://kevinjustin.com/blog/2023/08/18/mssql-addendum-pack/	
+Purpose:	Monitor MSSQL servers with least privs per best practices from MSFT engineers	
+Change Impact:	Low (decreases SCOM monitoring workflows on SQL)	
+Security Impact:	N/A (no changes on monitoring capabilities, assuming MSSQL runAs addendum installed as part of SQL monitoring suite)
+Any testing needed:	Allows for Dev/Test group to test or separate SQL servers monitored.
+
+
+Proactive Microsoft System Center Core Monitoring Addendum 1.0.1.6
+Download:	https://github.com/theKevinJustin/SCOMCoreAddendum
+Documentation:	https://kevinjustin.com/blog/2023/08/30/scomcore-addendum-pack/	
+Purpose:	Monitor SCOM core alerts per health model.  Includes High Agent Handle Count group, daily alert report and closure automation, alert tuning.
+Change Impact:	Low
+Security Impact:	Low
+Any testing needed:	Yes, update discovery pattern for offending high handle counts, ContextInstance for handle count group.
+
+
+Proactive NOSC Daily Tasks 1.0.4.4
+Download:	https://github.com/theKevinJustin/ProactiveNOSCDailyTasks
+Documentation:	https://kevinjustin.com/blog/2023/08/15/proactive-daily-reports/
+Purpose:	Multiple daily reports to help NOC/SOC/NOSC, System Administrators with daily alert reports for action required issues.  Includes Logical Disk, Expiring certificates, SysAdmin Daily Summary, Reboot and patching, as well as SCOM admin related error reports, long running scripts, alert update logic, and SCOM error event report.
+Change Impact:	New alerts to help System Owners know when servers need reboots
+Security Impact:	N/A
+Any testing needed:	N/A
+
+
+Proactive Patch Uptime Reboot Monitoring 10.19.10407.5
+Download:	https://github.com/theKevinJustin/ProactivePatchUptimeReboot
+Documentation:	https://kevinjustin.com/blog/2023/08/15/proactive-patching-alerts/
+Purpose:	Alert when servers need reboots due to patches, also NOT patched, NOT rebooted alert monitors
+Change Impact:	New alerts to help System Owners know when servers need reboots
+Security Impact:	N/A
+Any testing needed:	N/A
+
+
+Proactive PKI System Center Central Utilities Certificates Customizations 1.0.1.2
+Download:	https://github.com/theKevinJustin/PKIAddendum
+Documentation:	https://kevinjustin.com/blog/2023/08/24/pki-addendum-pack/
+Purpose:	Create groups to break out various certificate action scenarios, including AD Client Certificate enrollment templates, RDP, Computer, DC.  Also includes self-signed certs for multiple applications like SCOM, SCCM, Veeam, Splunk, Solarwinds.  Allows administrator to set each certificate type into a 'manual intervention' required scenario when action required.
+Change Impact:	Change paradigm to when System Owners need to take action
+Security Impact:	Low - Helps provide IT teams information on exploited certificates and common apps that use self-signed
+Any testing needed:	Yes, Import, and update group GUIDs for overrides configuring multiple variables specific to customer environment, including when to alert on internal vs. external certificates, AD client certificate templates/auto-enrollment templates in environment, as well as multiple application self-signed certificates. 
+
+
+Proactive TopProcess Monitoring Customizations 1.0.1.4
+Download:	Tier0 https://github.com/theKevinJustin/TopProcess
+		Tier1 SAW/PAM https://github.com/theKevinJustin/TopProcessTier1
+Documentation:	https://kevinjustin.com/blog/2023/08/14/top-process-powershell-script/
+Purpose:	Add TaskManager script to monitors to find offending processes hogging CPU/Memory
+Change Impact:	Links recovery workflow to multiple health/performance monitors to help identify culprit
+Security Impact:	N/A no special access required, just SCOM agent install on DC servers
+Any testing needed:	Can run on-demand task to prove no PowerShell errors
+
+
+SCOM.AgentThresholds Management Pack 7.0.0.1
+Download:	https://github.com/thekevinholman/SCOM.AgentThresholds
+Documentation:	https://kevinholman.com/2017/05/29/stop-healthservice-restarts-in-scom-2016/
+Purpose:	Alert on agent restarts, high handle count and memory for healthservice process.
+Change Impact:	Help admins know if SCOM agent restarting due to compute issues.
+Security Impact:	Low
+Any testing needed:	No
+
+
+SystemCenterCentral Utilities Certificates 1.4.3.0
+Download:	https://github.com/rafabu/SCOM-PKICertificateMP/releases/tag/v1.4.3.0
+Documentation:	https://blog.topqore.com/new-version-pki-certificates-monitoring-pack-for-scom/
+Purpose:	Discover certificates on any windows server monitored by SCOM. Checks certificate chain, validity, and expiration for alert scenarios across different certificate stores.
+Change Impact:	Alerts may occur if administrators do not remove old certificates
+Security Impact:	Low
+Any testing needed:	No
+
