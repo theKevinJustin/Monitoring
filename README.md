@@ -1,11 +1,26 @@
 # Monitoring
 Monitoring customizations
 
-Eliminate Monitoring harder vs smarter, make the monitoring tool carry the technical workload.
+Goals:
+Eliminate Monitoring harder vs smarter
+Make the monitoring tool carry the technical workload
+Manual intervention required alerts
+Build on the three key pillars - Health, Security, Compliance
 
-Authored management packs
-Addendum packs, updated pack functionality, the way you wish they were delivered
 
-May include PowerShell scripts like automated alert closure, daily reports.
+# Leverage authored management packs
+Authored management packs include:
 
-And more...
+  Addendum packs
+  Updated pack functionality
+  The way you wish they were delivered
+  Lessons from the field - customer and field engineer gaps
+  
+Include workflows (scripts) in PowerShell, shell, non-windows shell languages.
+
+  Automated alert closure
+  Daily reports
+  Recovery scripts to diagnose, resolve, reset alert
+
+
+and more...
